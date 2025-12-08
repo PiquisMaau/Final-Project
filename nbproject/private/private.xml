@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/proyecto/pkgfinal/ProyectoFinal.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Clases/Estudiantes.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Clases/Matriculas.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Clases/Cursos.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Clases/Usuario.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/CRUD/UsuarioCRUD.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/CRUD/CursosCRUD.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/CRUD/EstudianteSCRUD.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/CRUD/MatriculasCRUD.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/CRUD/CRUD.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Interfaces/Login.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Interfaces/GestorEstudiantes.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Interfaces/ReporteCursos.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Interfaces/ReporteEstudiantes.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Interfaces/VentanaPrincipal.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/pruebas/Estudiante.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Interfaces/Conexion.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/pruebas/EstudiantesbyMe.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/EstudiantebyME.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/Interfaces/TestConexion.java</file>
+            <file>file:/C:/Users/Sebas/Documents/NetBeansProjects/Proyecto%20Final/src/CRUD/test.java</file>
+        </group>
+    </open-files>
+</project-private>
