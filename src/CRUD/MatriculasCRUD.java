@@ -18,7 +18,7 @@ public class MatriculasCRUD extends CRUD<Matriculas> {
 
     @Override
     public boolean create(Matriculas m) {
-        String sql = "INSERT INTO matricula (idEstudiante, Semestre) VALUES (?, ?)";
+        String sql = "INSERT INTO matricula (idEstudiantes, Semestre) VALUES (?, ?)";
 
         try {
             Connection con = Conexion.getConexion();
