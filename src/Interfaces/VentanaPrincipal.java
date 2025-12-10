@@ -5,6 +5,8 @@
 package Interfaces;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -37,6 +39,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tabs.addTab("Estudiantes", estPanel);
         tabs.addTab("Cursos", curPanel);
 
+        // panel de pestañas
         if ("admin".equalsIgnoreCase(rol)) {
             MatriculasPanel matriculas = new MatriculasPanel();
             tabs.addTab("Matriculas", matriculas);
@@ -45,7 +48,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tabs.addTab("Usuarios", usuarios);
         }
 
+        // Cabecera con título a la izquierda y botón de Cerrar sesión a la derecha
+        JPanel header = new JPanel(new BorderLayout());
+        JLabel lblTitle = new JLabel("Aplicación - Usuario: " + usuario.getUsername());
+        lblTitle.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        header.add(lblTitle, BorderLayout.WEST);
+
+        JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnLogout = new JButton("Cerrar sesión");
+        btnLogout.addActionListener(ev -> {
+            // Cerrar ventana principal y volver al login
+            this.dispose();
+            java.awt.EventQueue.invokeLater(() -> {
+                new Login().setVisible(true);
+            });
+        });
+        right.add(btnLogout);
+        header.add(right, BorderLayout.EAST);
+
         getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(header, BorderLayout.NORTH);
         getContentPane().add(tabs, BorderLayout.CENTER);
     }
 
