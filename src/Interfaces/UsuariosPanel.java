@@ -115,7 +115,8 @@ public class UsuariosPanel extends JPanel {
     }
 
     private void cargarTabla() {
-        UsuarioCRUD crud = new UsuarioCRUD(); List<Usuario> lista = crud.listAll(); DefaultTableModel modelo = (DefaultTableModel) tabla.getModel(); modelo.setRowCount(0);
+        UsuarioCRUD crud = new UsuarioCRUD(); 
+        List<Usuario> lista = crud.listAll(); DefaultTableModel modelo = (DefaultTableModel) tabla.getModel(); modelo.setRowCount(0);
         for (Usuario u: lista) modelo.addRow(new Object[]{u.getIdUsuario(), u.getUsername(), u.getRol()});
     }
 }

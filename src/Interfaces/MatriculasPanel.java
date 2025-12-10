@@ -68,7 +68,6 @@ public class MatriculasPanel extends JPanel {
         });
 
         btnAgregar.addActionListener(ae -> {
-            // Matricular estudiante: buscar estudiante y curso
             String criterio = JOptionPane.showInputDialog(this, "Ingrese cédula o nombre del estudiante:");
             if (criterio==null || criterio.trim().isEmpty()) return;
             EstudianteSCRUD escrud = new EstudianteSCRUD(); List<Estudiantes> estList = escrud.readAll();

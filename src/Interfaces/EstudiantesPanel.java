@@ -216,10 +216,10 @@ public class EstudiantesPanel extends JPanel {
 
                     EstudianteSCRUD crud = new EstudianteSCRUD();
                     if (crud.update(actualizado)) {
-                        JOptionPane.showMessageDialog(this, "✅ Estudiante actualizado");
+                        JOptionPane.showMessageDialog(this, " Estudiante actualizado");
                         cargarTabla();
                     } else {
-                        JOptionPane.showMessageDialog(this, "❌ Error al actualizar");
+                        JOptionPane.showMessageDialog(this, " Error al actualizar");
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Edad inválida");

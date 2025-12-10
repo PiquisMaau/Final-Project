@@ -147,8 +147,8 @@ public class CursosPanel extends JPanel {
                     CursosCRUD crud = new CursosCRUD();
                     c.setSemestres(semestre); // Semestres representa semestre
                     c.setNombreCurso(nombre); c.setParalelo(paralelo);
-                    if (crud.create(c)) { JOptionPane.showMessageDialog(this, "✅ Curso agregado"); cargarTabla(); }
-                    else JOptionPane.showMessageDialog(this, "❌ Error al agregar");
+                    if (crud.create(c)) { JOptionPane.showMessageDialog(this, " Curso agregado"); cargarTabla(); }
+                    else JOptionPane.showMessageDialog(this, " Error al agregar");
                 } catch (NumberFormatException ex) { JOptionPane.showMessageDialog(this, "Semestre inválido"); }
             }
         });

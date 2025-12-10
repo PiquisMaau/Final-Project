@@ -14,9 +14,9 @@ public class TestConexion {
       public static void main(String[] args) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("✅ Driver MySQL cargado correctamente.");
+            System.out.println(" Driver MySQL cargado correctamente.");
         } catch (ClassNotFoundException e) {
-            System.out.println("❌ No se encontró el driver MySQL.");
+            System.out.println(" No se encontró el driver MySQL.");
         }
     }
 }
