@@ -46,15 +46,13 @@ public class GestorEstudiantes extends javax.swing.JFrame {
 
     private void initComponents2() {
 
-        // ====== CONFIG VENTANA ======
         setTitle("Gestor de Estudiantes");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // ====== PANEL SUPERIOR (HEADER) ======
         panelTop = new JPanel();
-        panelTop.setBackground(new Color(52, 152, 219)); // azul moderno
+        panelTop.setBackground(new Color(52, 152, 219)); 
         panelTop.setPreferredSize(new Dimension(800, 80));
 
         JLabel titulo = new JLabel("Gestor de Estudiantes");
@@ -175,10 +173,10 @@ public class GestorEstudiantes extends javax.swing.JFrame {
 
                     Estudiantes nuevo = crearEstudiante(ced, nom, ape, edad, tel, nuevoId);
                     if (crud.create(nuevo)) {
-                        JOptionPane.showMessageDialog(this, "✅ Estudiante agregado");
+                        JOptionPane.showMessageDialog(this, " Estudiante agregado");
                         cargarTabla();
                     } else {
-                        JOptionPane.showMessageDialog(this, "❌ Error al agregar");
+                        JOptionPane.showMessageDialog(this, " Error al agregar");
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Edad inválida");

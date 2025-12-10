@@ -140,15 +140,28 @@ public class CursosPanel extends JPanel {
             int res = JOptionPane.showConfirmDialog(this, panel, "Agregar curso", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (res == JOptionPane.OK_OPTION) {
                 try {
-                    int semestre = Integer.parseInt(tfSemestre.getText().trim());
+                    String semestreStr = tfSemestre.getText().trim();
                     String nombre = tfNombre.getText().trim();
                     String paralelo = tfParalelo.getText().trim();
+                    if (semestreStr.isEmpty() || nombre.isEmpty() || paralelo.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Por favor complete todos los campos");
+                        return;
+                    }
+                    if (!isNumeric(semestreStr)) {
+                        JOptionPane.showMessageDialog(this, "El semestre debe ser un número");
+                        return;
+                    }
+                    if (!isAlpha(nombre) || !isAlpha(paralelo)) {
+                        JOptionPane.showMessageDialog(this, "Nombre y paralelo deben contener sólo letras");
+                        return;
+                    }
+                    int semestre = Integer.parseInt(semestreStr);
                     Cursos c = new Cursos();
                     CursosCRUD crud = new CursosCRUD();
                     c.setSemestres(semestre); // Semestres representa semestre
                     c.setNombreCurso(nombre); c.setParalelo(paralelo);
-                    if (crud.create(c)) { JOptionPane.showMessageDialog(this, " Curso agregado"); cargarTabla(); }
-                    else JOptionPane.showMessageDialog(this, " Error al agregar");
+                    if (crud.create(c)) { JOptionPane.showMessageDialog(this, " ✅ Curso agregado"); cargarTabla(); }
+                    else JOptionPane.showMessageDialog(this, " ❌ Error al agregar");
                 } catch (NumberFormatException ex) { JOptionPane.showMessageDialog(this, "Semestre inválido"); }
             }
         });
@@ -171,8 +184,13 @@ public class CursosPanel extends JPanel {
             int res = JOptionPane.showConfirmDialog(this, panel, "Editar curso", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (res==JOptionPane.OK_OPTION) {
                 try {
+                    // Validaciones antes de actualizar
+                    String nuevoNombre = tfNombre.getText().trim();
+                    String nuevoParalelo = tfParalelo.getText().trim();
+                    if (nuevoNombre.isEmpty() || nuevoParalelo.isEmpty()) { JOptionPane.showMessageDialog(this, "Complete los campos obligatorios"); return; }
+                    if (!isAlpha(nuevoNombre) || !isAlpha(nuevoParalelo)) { JOptionPane.showMessageDialog(this, "Nombre y paralelo deben contener sólo letras"); return; }
                     // No cambiar el semestre (Semestres) para evitar inconsistencias en matriculas.
-                    Cursos c = new Cursos(); c.setSemestres(id); c.setNombreCurso(tfNombre.getText().trim()); c.setParalelo(tfParalelo.getText().trim());
+                    Cursos c = new Cursos(); c.setSemestres(id); c.setNombreCurso(nuevoNombre); c.setParalelo(nuevoParalelo);
                     CursosCRUD crud = new CursosCRUD();
                     if (crud.update(c)) { JOptionPane.showMessageDialog(this, "✅ Curso actualizado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al actualizar");
                 } catch (NumberFormatException ex) { JOptionPane.showMessageDialog(this, "Valor inválido"); }
@@ -213,7 +231,6 @@ public class CursosPanel extends JPanel {
             JPanel p = new JPanel(new BorderLayout());
             p.add(sp, BorderLayout.CENTER);
 
-            // search panel
             javax.swing.JTextField tfSearch = new javax.swing.JTextField(20);
             javax.swing.JButton bSearch = new javax.swing.JButton("Buscar");
             javax.swing.JPanel top = new javax.swing.JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -281,5 +298,15 @@ public class CursosPanel extends JPanel {
         for (Cursos c : lista) {
             modelo.addRow(new Object[] { c.getSemestres(), c.getNombreCurso(), c.getParalelo() });
         }
+    }
+
+    // Validación simple: solo dígitos
+    private boolean isNumeric(String s) {
+        return s != null && s.matches("\\d+");
+    }
+
+    // Validación de nombre/paralelo: letras (incluye acentos) y espacios
+    private boolean isAlpha(String s) {
+        return s != null && s.matches("[a-zA-ZÀ-ÿ\\s]+");
     }
 }

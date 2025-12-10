@@ -51,7 +51,7 @@ public class MatriculasCRUD extends CRUD<Matriculas> {
             if (rs.next()) {
                 m = new Matriculas();
                 m.setIdMatricula(rs.getInt("idMatricula"));
-                m.setIdEstudiante(rs.getInt("idEstudiante"));
+                m.setIdEstudiante(rs.getInt("idEstudiantes"));
                 m.setSemestre(rs.getInt("Semestre"));
             }
 
@@ -64,7 +64,7 @@ public class MatriculasCRUD extends CRUD<Matriculas> {
 
     @Override
     public boolean update(Matriculas m) {
-        String sql = "UPDATE matricula SET Semestre=? WHERE idEstudiante=?";
+        String sql = "UPDATE matricula SET Semestre=? WHERE idEstudiantes=?";
 
         try {
             Connection con = Conexion.getConexion();
@@ -113,7 +113,7 @@ public class MatriculasCRUD extends CRUD<Matriculas> {
             while (rs.next()) {
                 Matriculas m = new Matriculas();
                 m.setIdMatricula(rs.getInt("idMatricula"));
-                m.setIdEstudiante(rs.getInt("idEstudiante"));
+                m.setIdEstudiante(rs.getInt("idEstudiantes"));
                 m.setSemestre(rs.getInt("Semestre"));
 
                 lista.add(m);
@@ -127,7 +127,7 @@ public class MatriculasCRUD extends CRUD<Matriculas> {
     }
 
     public boolean existeMatricula(int idEstudiante) {
-        String sql = "SELECT * FROM matricula WHERE idEstudiante = ?";
+        String sql = "SELECT * FROM matricula WHERE idEstudiantes = ?";
 
         try {
             Connection con = Conexion.getConexion();

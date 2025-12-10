@@ -19,7 +19,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-        // Default empty; there's another constructor used by Login
     }
 
     public VentanaPrincipal(Clases.Usuario usuario) {
@@ -29,7 +28,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Crear pestañas y contenido según rol
         javax.swing.JTabbedPane tabs = new javax.swing.JTabbedPane();
 
         String rol = usuario.getRol();
@@ -39,7 +37,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tabs.addTab("Estudiantes", estPanel);
         tabs.addTab("Cursos", curPanel);
 
-        // Pestañas adicionales sólo para admin
         if ("admin".equalsIgnoreCase(rol)) {
             MatriculasPanel matriculas = new MatriculasPanel();
             tabs.addTab("Matriculas", matriculas);

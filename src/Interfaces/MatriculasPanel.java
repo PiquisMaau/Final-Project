@@ -1,10 +1,9 @@
 package Interfaces;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,18 +32,60 @@ public class MatriculasPanel extends JPanel {
     }
 
     private void initComponents() {
-        setLayout(new BorderLayout());
-        JPanel top = new JPanel(); top.setPreferredSize(new java.awt.Dimension(800,60)); top.add(new JLabel("Gestión de Matriculas"));
-        add(top, BorderLayout.NORTH);
-        tabla = new JTable();
-        tabla.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID","Estudiante","Cédula","Curso(Semestre)"}));
-        scroll = new JScrollPane(tabla);
-        add(scroll, BorderLayout.CENTER);
-        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER,10,10));
-        btnAgregar = new JButton("Matricular"); btnEliminar = new JButton("Eliminar"); btnBuscar = new JButton("Buscar");
-        bottom.add(btnAgregar); bottom.add(btnEliminar); bottom.add(btnBuscar);
-        add(bottom, BorderLayout.SOUTH);
-    }
+    setLayout(new BorderLayout());
+
+    // ------------------ PANEL SUPERIOR ------------------
+    JPanel panelTop = new JPanel();
+    panelTop.setBackground(new Color(46, 204, 113)); // Verde moderno
+    panelTop.setPreferredSize(new Dimension(800, 60));
+
+    JLabel titulo = new JLabel("Gestión de Matrículas");
+    titulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+    titulo.setForeground(Color.WHITE);
+    panelTop.add(titulo);
+
+    add(panelTop, BorderLayout.NORTH);
+
+    // ------------------ TABLA ------------------
+    tabla = new JTable();
+    tabla.setModel(new DefaultTableModel(
+            new Object[][]{},
+            new String[]{"ID", "Estudiante", "Cédula", "Curso (Semestre)"}
+    ));
+
+    tabla.setRowHeight(24);
+    tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+    tabla.getTableHeader().setBackground(new Color(39, 174, 96));
+    tabla.getTableHeader().setForeground(Color.WHITE);
+
+    scroll = new JScrollPane(tabla);
+    add(scroll, BorderLayout.CENTER);
+
+    // ------------------ PANEL DE BOTONES ------------------
+    JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 10));
+    panelButtons.setBackground(new Color(236, 240, 241));
+
+    btnAgregar = crearBoton("Matricular", new Color(39, 174, 96));
+    btnEliminar = crearBoton("Eliminar", new Color(231, 76, 60));
+    btnBuscar = crearBoton("Buscar", new Color(52, 152, 219));
+
+    panelButtons.add(btnAgregar);
+    panelButtons.add(btnEliminar);
+    panelButtons.add(btnBuscar);
+
+    add(panelButtons, BorderLayout.SOUTH);
+}
+private JButton crearBoton(String texto, Color colorFondo) {
+    JButton btn = new JButton(texto);
+    btn.setFocusPainted(false);
+    btn.setBackground(colorFondo);
+    btn.setForeground(Color.WHITE);
+    btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+    btn.setPreferredSize(new Dimension(140, 35));
+    btn.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+    return btn;
+}
+
 
     private void configurarAcciones() {
         btnBuscar.addActionListener(ae -> {
@@ -79,7 +120,7 @@ public class MatriculasPanel extends JPanel {
             for (Cursos ccx: cursos) if ((String.valueOf(ccx.getSemestres()).equals(cc)) || (ccx.getNombreCurso()!=null && ccx.getNombreCurso().toLowerCase().contains(cc))) { foundC=ccx; break; }
             if (foundC==null) { JOptionPane.showMessageDialog(this, "Curso no encontrado"); return; }
             MatriculasCRUD mcrud = new MatriculasCRUD(); Matriculas m = new Matriculas(); m.setIdEstudiante(found.getIdEstudiantes()); m.setSemestre(foundC.getSemestres());
-            if (mcrud.create(m)) { JOptionPane.showMessageDialog(this, "✅ Matriculado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al matricular");
+            if (mcrud.create(m)) { JOptionPane.showMessageDialog(this, "Matriculado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al matricular");
         });
 
         btnEliminar.addActionListener(ae -> {

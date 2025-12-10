@@ -84,6 +84,20 @@ public class UsuariosPanel extends JPanel {
             int res = JOptionPane.showConfirmDialog(this, p, "Agregar usuario", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (res==JOptionPane.OK_OPTION) {
                 String user = tfUser.getText().trim(); String pass = tfPass.getText().trim(); String rol = tfRol.getText().trim();
+                // Validaciones básicas
+                if (user.isEmpty() || pass.isEmpty() || rol.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Por favor complete todos los campos obligatorios");
+                    return;
+                }
+                if (!isAlphanumeric(user)) {
+                    JOptionPane.showMessageDialog(this, "El nombre de usuario sólo puede contener letras y números");
+                    return;
+                }
+                if (!isRoleValid(rol)) {
+                    JOptionPane.showMessageDialog(this, "Rol inválido. Use 'admin' o 'secretario'");
+                    return;
+                }
+
                 UsuarioCRUD crud = new UsuarioCRUD();
                 List<Usuario> lista = crud.listAll(); int maxId=0; for (Usuario uu: lista) if (uu.getIdUsuario()>maxId) maxId=uu.getIdUsuario();
                 Usuario u = new Usuario(); u.setIdUsuario(maxId+1); u.setUsername(user); u.setPassword(pass); u.setRol(rol);
@@ -101,7 +115,11 @@ public class UsuariosPanel extends JPanel {
             JPanel p = new JPanel(new GridLayout(0,1)); p.add(new JLabel("Usuario:")); p.add(tfUser); p.add(new JLabel("Contraseña (nuevo):")); p.add(tfPass); p.add(new JLabel("Rol:")); p.add(tfRol);
             int res = JOptionPane.showConfirmDialog(this, p, "Editar usuario", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (res==JOptionPane.OK_OPTION) {
-                Usuario u = new Usuario(); u.setIdUsuario(id); u.setUsername(tfUser.getText().trim()); String pass = tfPass.getText().trim(); if (!pass.isEmpty()) u.setPassword(pass); else u.setPassword(""); u.setRol(tfRol.getText().trim());
+                String newUser = tfUser.getText().trim(); String newPass = tfPass.getText().trim(); String newRol = tfRol.getText().trim();
+                if (newUser.isEmpty() || newRol.isEmpty()) { JOptionPane.showMessageDialog(this, "Usuario y rol son obligatorios"); return; }
+                if (!isAlphanumeric(newUser)) { JOptionPane.showMessageDialog(this, "El nombre de usuario sólo puede contener letras y números"); return; }
+                if (!isRoleValid(newRol)) { JOptionPane.showMessageDialog(this, "Rol inválido. Use 'admin' o 'secretario'"); return; }
+                Usuario u = new Usuario(); u.setIdUsuario(id); u.setUsername(newUser); if (!newPass.isEmpty()) u.setPassword(newPass); else u.setPassword(""); u.setRol(newRol);
                 UsuarioCRUD crud = new UsuarioCRUD(); if (crud.update(u)) { JOptionPane.showMessageDialog(this, "✅ Usuario actualizado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al actualizar");
             }
         });
@@ -118,5 +136,17 @@ public class UsuariosPanel extends JPanel {
         UsuarioCRUD crud = new UsuarioCRUD(); 
         List<Usuario> lista = crud.listAll(); DefaultTableModel modelo = (DefaultTableModel) tabla.getModel(); modelo.setRowCount(0);
         for (Usuario u: lista) modelo.addRow(new Object[]{u.getIdUsuario(), u.getUsername(), u.getRol()});
+    }
+
+    // Username: letters and numbers only
+    private boolean isAlphanumeric(String s) {
+        return s != null && s.matches("[A-Za-z0-9_\\-]+");
+    }
+
+    // Role must be 'admin' or 'secretario'
+    private boolean isRoleValid(String r) {
+        if (r==null) return false;
+        String v = r.trim().toLowerCase();
+        return "admin".equals(v) || "secretario".equals(v);
     }
 }

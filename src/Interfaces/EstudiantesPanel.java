@@ -132,6 +132,23 @@ public class EstudiantesPanel extends JPanel {
                     String ape = tfApellido.getText().trim();
                     int edad = Integer.parseInt(tfEdad.getText().trim());
                     String tel = tfTelefono.getText().trim();
+                    // Validaciones: cédula y teléfono deben ser numéricos; nombre y apellido solo letras
+                    if (ced.isEmpty() || nom.isEmpty() || ape.isEmpty() || tel.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Por favor complete todos los campos obligatorios");
+                        return;
+                    }
+                    if (!isNumeric(ced)) {
+                        JOptionPane.showMessageDialog(this, "La cédula debe contener sólo números");
+                        return;
+                    }
+                    if (!isNumeric(tel)) {
+                        JOptionPane.showMessageDialog(this, "El teléfono debe contener sólo números");
+                        return;
+                    }
+                    if (!isAlpha(nom) || !isAlpha(ape)) {
+                        JOptionPane.showMessageDialog(this, "Nombre y apellido deben contener sólo letras");
+                        return;
+                    }
 
                     EstudianteSCRUD crud = new EstudianteSCRUD();
                     List<Estudiantes> lista = crud.readAll();
@@ -152,10 +169,10 @@ public class EstudiantesPanel extends JPanel {
                     nuevo.setEsttelefono(tel);
 
                     if (crud.create(nuevo)) {
-                        JOptionPane.showMessageDialog(this, "✅ Estudiante agregado");
+                        JOptionPane.showMessageDialog(this, " Estudiante agregado");
                         cargarTabla();
                     } else {
-                        JOptionPane.showMessageDialog(this, "❌ Error al agregar");
+                        JOptionPane.showMessageDialog(this, " Error al agregar");
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Edad inválida");
@@ -205,6 +222,23 @@ public class EstudiantesPanel extends JPanel {
                     String nape = tfApellido.getText().trim();
                     int nedad = Integer.parseInt(tfEdad.getText().trim());
                     String ntel = tfTelefono.getText().trim();
+                    // Validaciones
+                    if (nced.isEmpty() || nnom.isEmpty() || nape.isEmpty() || ntel.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Por favor complete todos los campos obligatorios");
+                        return;
+                    }
+                    if (!isNumeric(nced)) {
+                        JOptionPane.showMessageDialog(this, "La cédula debe contener sólo números");
+                        return;
+                    }
+                    if (!isNumeric(ntel)) {
+                        JOptionPane.showMessageDialog(this, "El teléfono debe contener sólo números");
+                        return;
+                    }
+                    if (!isAlpha(nnom) || !isAlpha(nape)) {
+                        JOptionPane.showMessageDialog(this, "Nombre y apellido deben contener sólo letras");
+                        return;
+                    }
 
                     Estudiantes actualizado = new Estudiantes();
                     actualizado.setIdEstudiantes(id);
@@ -285,5 +319,15 @@ public class EstudiantesPanel extends JPanel {
         for (Estudiantes e : lista) {
             modelo.addRow(new Object[] { e.getIdEstudiantes(), e.getEstcedula(), e.getEstnombre(), e.getEstapellido(), e.getEstedad(), e.getEsttelefono() });
         }
+    }
+
+    // Validación simple: solo dígitos
+    private boolean isNumeric(String s) {
+        return s != null && s.matches("\\d+");
+    }
+
+    // Validación de nombre/apellido: letras (incluye acentos) y espacios
+    private boolean isAlpha(String s) {
+        return s != null && s.matches("[a-zA-ZÀ-ÿ\\s]+");
     }
 }
