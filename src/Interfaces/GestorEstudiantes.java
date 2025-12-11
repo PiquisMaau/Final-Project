@@ -235,10 +235,10 @@ public class GestorEstudiantes extends javax.swing.JFrame {
                     Estudiantes actualizado = crearEstudiante(nced, nnom, nape, nedad, ntel, id);
                     EstudianteSCRUD crud = new EstudianteSCRUD();
                     if (crud.update(actualizado)) {
-                        JOptionPane.showMessageDialog(this, "✅ Estudiante actualizado");
+                        JOptionPane.showMessageDialog(this, "Estudiante actualizado");
                         cargarTabla();
                     } else {
-                        JOptionPane.showMessageDialog(this, "❌ Error al actualizar");
+                        JOptionPane.showMessageDialog(this, "Error al actualizar");
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Edad inválida");
@@ -261,11 +261,11 @@ public class GestorEstudiantes extends javax.swing.JFrame {
                 EstudianteSCRUD crud = new EstudianteSCRUD();
                 if (crud.delete(id)) {
 
-                    JOptionPane.showMessageDialog(this, "✅ Eliminado");
+                    JOptionPane.showMessageDialog(this, "Eliminado");
                     crud.reordenarIDs();
                     cargarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(this, "❌ Error al eliminar");
+                    JOptionPane.showMessageDialog(this, "Error al eliminar");
                 }
             }
         });

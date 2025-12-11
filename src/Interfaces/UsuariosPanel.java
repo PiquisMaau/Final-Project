@@ -101,7 +101,7 @@ public class UsuariosPanel extends JPanel {
                 UsuarioCRUD crud = new UsuarioCRUD();
                 List<Usuario> lista = crud.listAll(); int maxId=0; for (Usuario uu: lista) if (uu.getIdUsuario()>maxId) maxId=uu.getIdUsuario();
                 Usuario u = new Usuario(); u.setIdUsuario(maxId+1); u.setUsername(user); u.setPassword(pass); u.setRol(rol);
-                if (crud.create(u)) { JOptionPane.showMessageDialog(this, "✅ Usuario creado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al crear usuario");
+                if (crud.create(u)) { JOptionPane.showMessageDialog(this, "Usuario creado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al crear usuario");
             }
         });
 
@@ -120,7 +120,7 @@ public class UsuariosPanel extends JPanel {
                 if (!isAlphanumeric(newUser)) { JOptionPane.showMessageDialog(this, "El nombre de usuario sólo puede contener letras y números"); return; }
                 if (!isRoleValid(newRol)) { JOptionPane.showMessageDialog(this, "Rol inválido. Use 'admin' o 'secretario'"); return; }
                 Usuario u = new Usuario(); u.setIdUsuario(id); u.setUsername(newUser); if (!newPass.isEmpty()) u.setPassword(newPass); else u.setPassword(""); u.setRol(newRol);
-                UsuarioCRUD crud = new UsuarioCRUD(); if (crud.update(u)) { JOptionPane.showMessageDialog(this, "✅ Usuario actualizado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al actualizar");
+                UsuarioCRUD crud = new UsuarioCRUD(); if (crud.update(u)) { JOptionPane.showMessageDialog(this, "Usuario actualizado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al actualizar");
             }
         });
 
@@ -128,7 +128,7 @@ public class UsuariosPanel extends JPanel {
             int fila = tabla.getSelectedRow(); if (fila==-1) { JOptionPane.showMessageDialog(this, "Seleccione un usuario"); return; }
             DefaultTableModel modelo = (DefaultTableModel) tabla.getModel(); int id = (int) modelo.getValueAt(fila,0);
             int conf = JOptionPane.showConfirmDialog(this, "¿Eliminar usuario ID " + id + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (conf==JOptionPane.YES_OPTION) { UsuarioCRUD crud = new UsuarioCRUD(); if (crud.delete(id)) { JOptionPane.showMessageDialog(this, "✅ Eliminado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al eliminar"); }
+            if (conf==JOptionPane.YES_OPTION) { UsuarioCRUD crud = new UsuarioCRUD(); if (crud.delete(id)) { JOptionPane.showMessageDialog(this, "Eliminado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al eliminar"); }
         });
     }
 

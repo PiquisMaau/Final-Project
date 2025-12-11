@@ -160,8 +160,8 @@ public class CursosPanel extends JPanel {
                     CursosCRUD crud = new CursosCRUD();
                     c.setSemestres(semestre); // Semestres representa semestre
                     c.setNombreCurso(nombre); c.setParalelo(paralelo);
-                    if (crud.create(c)) { JOptionPane.showMessageDialog(this, " ✅ Curso agregado"); cargarTabla(); }
-                    else JOptionPane.showMessageDialog(this, " ❌ Error al agregar");
+                    if (crud.create(c)) { JOptionPane.showMessageDialog(this, "Curso agregado"); cargarTabla(); }
+                    else JOptionPane.showMessageDialog(this, "Error al agregar");
                 } catch (NumberFormatException ex) { JOptionPane.showMessageDialog(this, "Semestre inválido"); }
             }
         });
@@ -192,7 +192,7 @@ public class CursosPanel extends JPanel {
                     // No cambiar el semestre (Semestres) para evitar inconsistencias en matriculas.
                     Cursos c = new Cursos(); c.setSemestres(id); c.setNombreCurso(nuevoNombre); c.setParalelo(nuevoParalelo);
                     CursosCRUD crud = new CursosCRUD();
-                    if (crud.update(c)) { JOptionPane.showMessageDialog(this, "✅ Curso actualizado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al actualizar");
+                    if (crud.update(c)) { JOptionPane.showMessageDialog(this, "Curso actualizado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al actualizar");
                 } catch (NumberFormatException ex) { JOptionPane.showMessageDialog(this, "Valor inválido"); }
             }
         });
@@ -203,7 +203,7 @@ public class CursosPanel extends JPanel {
             DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
             int id = (int) modelo.getValueAt(fila,0);
             int conf = JOptionPane.showConfirmDialog(this, "¿Eliminar curso ID " + id + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (conf==JOptionPane.YES_OPTION) { CursosCRUD crud = new CursosCRUD(); if (crud.delete(id)) { JOptionPane.showMessageDialog(this, "✅ Eliminado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al eliminar"); }
+            if (conf==JOptionPane.YES_OPTION) { CursosCRUD crud = new CursosCRUD(); if (crud.delete(id)) { JOptionPane.showMessageDialog(this, "Eliminado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al eliminar"); }
         });
 
         // Ver estudiantes matriculados en el curso
@@ -258,8 +258,8 @@ public class CursosPanel extends JPanel {
                     Clases.Matriculas nueva = new Clases.Matriculas();
                     nueva.setIdEstudiante(found.getIdEstudiantes());
                     nueva.setSemestre(Semestre);
-                    if (mc.create(nueva)) { JOptionPane.showMessageDialog(this, "✅ Matriculado"); }
-                    else JOptionPane.showMessageDialog(this, "❌ Error al matricular");
+                    if (mc.create(nueva)) { JOptionPane.showMessageDialog(this, "Matriculado"); }
+                    else JOptionPane.showMessageDialog(this, "Error al matricular");
                 });
             }
 
@@ -283,6 +283,8 @@ public class CursosPanel extends JPanel {
                         }
                     }
                 }
+                if (m2.getRowCount() == 0 && !q.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(null, "El estudiante no existe :(.");}
             });
 
             dlg.setModal(true);

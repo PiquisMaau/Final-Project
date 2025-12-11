@@ -32,6 +32,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         javax.swing.JTabbedPane tabs = new javax.swing.JTabbedPane();
 
+
         String rol = usuario.getRol();
         EstudiantesPanel estPanel = new EstudiantesPanel(rol);
         CursosPanel curPanel = new CursosPanel(rol);

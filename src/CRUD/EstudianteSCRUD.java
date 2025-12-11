@@ -32,7 +32,9 @@ public class EstudianteSCRUD extends CRUD<Estudiantes> {
             ps.executeUpdate();
             return true;
 
-        } catch (SQLException ex) {
+        }  catch (java.sql.SQLIntegrityConstraintViolationException ex) {
+        System.out.println("Error: La cédula ya existe en la base de datos.");
+        return false;}catch (SQLException ex) {
             System.out.println("Error al insertar estudiante: " + ex.getMessage());
             return false;
         }

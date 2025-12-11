@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import CRUD.MatriculasCRUD;
@@ -109,25 +108,66 @@ private JButton crearBoton(String texto, Color colorFondo) {
         });
 
         btnAgregar.addActionListener(ae -> {
-            String criterio = JOptionPane.showInputDialog(this, "Ingrese cédula o nombre del estudiante:");
-            if (criterio==null || criterio.trim().isEmpty()) return;
-            EstudianteSCRUD escrud = new EstudianteSCRUD(); List<Estudiantes> estList = escrud.readAll();
-            Estudiantes found = null; String c = criterio.trim().toLowerCase();
-            for (Estudiantes e: estList) if ((e.getEstcedula()!=null && e.getEstcedula().toLowerCase().contains(c)) || (e.getEstnombre()!=null && e.getEstnombre().toLowerCase().contains(c)) || (e.getEstapellido()!=null && e.getEstapellido().toLowerCase().contains(c))) { found=e; break; }
-            if (found==null) { JOptionPane.showMessageDialog(this, "Estudiante no encontrado"); return; }
-            String cursoCrit = JOptionPane.showInputDialog(this, "Ingrese semestre del curso o nombre del curso:"); if (cursoCrit==null || cursoCrit.trim().isEmpty()) return;
-            CursosCRUD ccrud = new CursosCRUD(); List<Cursos> cursos = ccrud.listAll(); Cursos foundC=null; String cc = cursoCrit.trim().toLowerCase();
-            for (Cursos ccx: cursos) if ((String.valueOf(ccx.getSemestres()).equals(cc)) || (ccx.getNombreCurso()!=null && ccx.getNombreCurso().toLowerCase().contains(cc))) { foundC=ccx; break; }
-            if (foundC==null) { JOptionPane.showMessageDialog(this, "Curso no encontrado"); return; }
-            MatriculasCRUD mcrud = new MatriculasCRUD(); Matriculas m = new Matriculas(); m.setIdEstudiante(found.getIdEstudiantes()); m.setSemestre(foundC.getSemestres());
-            if (mcrud.create(m)) { JOptionPane.showMessageDialog(this, "Matriculado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al matricular");
-        });
+    // 1. Pedir Estudiante (Puedes mantener tu input actual o mejorarlo)
+    String criterio = JOptionPane.showInputDialog(this, "Ingrese cédula del estudiante a matricular:");
+    if (criterio == null || criterio.trim().isEmpty()) return;
+
+    EstudianteSCRUD escrud = new EstudianteSCRUD();
+    // Busca el estudiante (asumiendo que tienes un método buscarPorCedula o usas lógica de filtrado)
+    // Para simplificar, aquí buscamos en todos:
+    Estudiantes found = null;
+    for (Estudiantes e : escrud.readAll()) {
+        if (e.getEstcedula().equals(criterio)) { found = e; break; }
+    }
+    
+    if (found == null) {
+        JOptionPane.showMessageDialog(this, "Estudiante no encontrado.");
+        return;
+    }
+
+    // --- REQUISITO: VALIDAR 1 ESTUDIANTE = 1 CURSO ---
+    MatriculasCRUD mcrud = new MatriculasCRUD();
+    if (mcrud.existeMatricula(found.getIdEstudiantes())) { // Asegurate de tener este método en MatriculasCRUD
+        JOptionPane.showMessageDialog(this, " El estudiante ya está inscrito en un curso.\nNo puede tener más de uno.");
+        return;
+    }
+
+    // --- REQUISITO: COMBOBOX DE CURSOS ---
+    // Creamos el combo y lo llenamos con objetos Cursos
+    javax.swing.JComboBox<String> comboCursos = new javax.swing.JComboBox<>();
+    CursosCRUD ccrud = new CursosCRUD();
+    List<Cursos> listaCursos = ccrud.listAll();
+    
+    for (Cursos c : listaCursos) {
+        // Mostramos Nombre y Paralelo en el combo
+        comboCursos.addItem(c.getNombreCurso() + " - " + c.getParalelo() + " (Sem: " + c.getSemestres() + ")");
+    }
+
+    // Mostramos el ComboBox en una ventanita
+    int result = JOptionPane.showConfirmDialog(this, comboCursos, "Seleccione el Curso", JOptionPane.OK_CANCEL_OPTION);
+    
+    if (result == JOptionPane.OK_OPTION) {
+        int index = comboCursos.getSelectedIndex();
+        Cursos cursoSeleccionado = listaCursos.get(index); // Obtenemos el objeto Curso real de la lista
+
+        Matriculas nuevaMatricula = new Matriculas();
+        nuevaMatricula.setIdEstudiante(found.getIdEstudiantes());
+        nuevaMatricula.setSemestre(cursoSeleccionado.getSemestres()); // OJO: Usas 'Semestre' como ID del curso en tu código
+        
+        if (mcrud.create(nuevaMatricula)) {
+            JOptionPane.showMessageDialog(this, "Matriculado con éxito en " + cursoSeleccionado.getNombreCurso());
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al guardar.");
+        }
+    }
+});
 
         btnEliminar.addActionListener(ae -> {
             int fila = tabla.getSelectedRow(); if (fila==-1) { JOptionPane.showMessageDialog(this, "Seleccione una matrícula"); return; }
             DefaultTableModel modelo = (DefaultTableModel) tabla.getModel(); int id = (int) modelo.getValueAt(fila,0);
             int conf = JOptionPane.showConfirmDialog(this, "¿Eliminar matrícula ID " + id + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (conf==JOptionPane.YES_OPTION) { MatriculasCRUD mcrud = new MatriculasCRUD(); if (mcrud.delete(id)) { JOptionPane.showMessageDialog(this, "✅ Eliminado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "❌ Error al eliminar"); }
+            if (conf==JOptionPane.YES_OPTION) { MatriculasCRUD mcrud = new MatriculasCRUD(); if (mcrud.delete(id)) { JOptionPane.showMessageDialog(this, "Eliminado"); cargarTabla(); } else JOptionPane.showMessageDialog(this, "Error al eliminar"); }
         });
     }
 

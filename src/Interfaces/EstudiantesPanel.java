@@ -169,7 +169,7 @@ public class EstudiantesPanel extends JPanel {
                     nuevo.setEsttelefono(tel);
 
                     if (crud.create(nuevo)) {
-                        JOptionPane.showMessageDialog(this, " Estudiante agregado");
+                        JOptionPane.showMessageDialog(this, "Estudiante agregado");
                         cargarTabla();
                     } else {
                         JOptionPane.showMessageDialog(this, " Error al agregar");
@@ -250,10 +250,10 @@ public class EstudiantesPanel extends JPanel {
 
                     EstudianteSCRUD crud = new EstudianteSCRUD();
                     if (crud.update(actualizado)) {
-                        JOptionPane.showMessageDialog(this, " Estudiante actualizado");
+                        JOptionPane.showMessageDialog(this, "Estudiante actualizado");
                         cargarTabla();
                     } else {
-                        JOptionPane.showMessageDialog(this, " Error al actualizar");
+                        JOptionPane.showMessageDialog(this, "Error al actualizar");
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Edad inválida");
@@ -275,10 +275,10 @@ public class EstudiantesPanel extends JPanel {
             if (conf == JOptionPane.YES_OPTION) {
                 EstudianteSCRUD crud = new EstudianteSCRUD();
                 if (crud.delete(id)) {
-                    JOptionPane.showMessageDialog(this, "✅ Eliminado");
+                    JOptionPane.showMessageDialog(this, "Eliminado");
                     cargarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(this, "❌ Error al eliminar");
+                    JOptionPane.showMessageDialog(this, "Error al eliminar");
                 }
             }
         });
